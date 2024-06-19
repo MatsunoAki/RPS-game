@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css" >
 </head>
 <body>
     <h1>Rock Paper Scissors</h1>
-    <div class="container">
-        <input type="button" value="Rock"></input>
-        <input type="button" value="Paper"></input>
-        <input type="button" value="Scissors"></input>
-      </div>
-      <div class="result"></div>
+        <div class="choices">
+            <button onclick="playRound('Rock')">👊</button>
+            <button onclick="playRound('Paper')">🤚</button>
+            <button onclick="playRound('Scissors')">✌️</button>
+        </div>
+        <div id="playerDisplay">Player Choice:</div>
+        <div id="computerDisplay">Computer Choice:</div>
+        <div id="resultDisplay"></div>
+        <div class="result"></div>
+        <div class="displayScore">Player Score: <span id="playerScoreDisplay">0</span></div>
+        <div class="displayScore">Computer Score: <span id="computerScoreDisplay">0</span> </div>
     <script src="index.js"></script>
 </body>
 </html>
