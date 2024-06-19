@@ -12,6 +12,8 @@ const resultDiv = document.querySelector('.result');
 //Game Reset
 function gameReset() {
     setTimeout(() => {
+
+        
         playerDisplay.textContent = `Player Choice: `;
         computerDisplay.textContent = `Computer Choice: `;
         resultDisplay.textContent = "";
@@ -73,9 +75,11 @@ function playRound(playerSelection) {
 
     if(humanScore === 5) {
         alert("Game Over! YOU WON!!!");
+        humanScore = 0;
         gameReset();
     }else if(computerScore ===5){
         alert("Game Over! COMPUTER WON..");
+        computerScore = 0;
         gameReset();
     }
 }
