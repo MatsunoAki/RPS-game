@@ -1,24 +1,30 @@
 
+const playerDisplay = document.getElementById('playerDisplay');
+const computerDisplay = document.getElementById('computerDisplay');
+const resultDisplay = document.getElementById('resultDisplay');
+
 let humanScore = 0;
 let computerScore = 0;
 const buttons = document.querySelectorAll('input')
 const resultDiv = document.querySelector('.result');
 
-//disable buttons
-function disableButtons() {
+
+//Game Reset
+function gameReset() {
     setTimeout(() => {
-        alert("Game restarted!"); // Example alert message
-        humanScore = 0;
-        computerScore = 0;
-        result = ""
-        result.innerHTML = ""
+        playerDisplay.textContent = `Player Choice: `;
+        computerDisplay.textContent = `Computer Choice: `;
+        resultDisplay.textContent = "";
+        playerScoreDisplay.textContent = `0`;
+        computerScoreDisplay.textContent = `0`;
+
     }, 50);
 }
 
 //comp func
 function getComputerChoice() {
     const choices = ["Rock", "Paper", "Scissors"];
-    return choices[Math.floor(Math.random() * choices.length)];
+    return choices[Math.floor(Math.random() * 3)];
 }
 
 //play Round
@@ -26,38 +32,50 @@ function playRound(playerSelection) {
     let computerSelection = getComputerChoice()
     let result = ""
 
-    if(playerSelection == "Rock" && computerSelection == "Scissors" ||
-        playerSelection == "Paper" && computerSelection == "Rock" ||
-        playerSelection == "Scissors" && computerSelection == "Paper") {
-        humanScore+=1
-        result = `Yay! ${playerSelection} beats ${computerSelection}!<br>Player Score: ${humanScore}<br>Computer Score: ${computerScore}`;
-
-
-        if (humanScore == 5) {
-            result+= "<br> game Over! you won!"
-        disableButtons()
-        }
-
-    } else if (playerSelection == computerSelection) {
-        result = `It's a tie! Both chose ${playerSelection}.<br>Player Score: ${humanScore}<br>Computer Score: ${computerScore}`;
+    if(playerSelection === computerSelection) {
+        result = "BEEP! IT'S A TIE"
     } else {
-        computerScore++;
-        result = `Oops! ${computerSelection} beats ${playerSelection}.<br>Player Score: ${humanScore}<br>Computer Score: ${computerScore}`;
-
-        if (computerScore === 5) {
-            result += "<br>Game Over! Computer won!";
-            disableButtons()
+        switch(playerSelection){
+            case "Rock": {
+                result = (computerSelection === "Scissors") ? "YOU WIN!":"YOU LOSE!"
+                break;
+            }
+            case "Paper": {
+                result =(computerSelection === "Rock") ? "YOU WIN!":"YOU LOSE!"
+                break;
+            }
+            case "Scissors": {
+                result =(computerSelection === "Paper") ? "YOU WIN!":"YOU LOSE!"
+                break;
+            }
         }
-    
     }
-    //display result
-    document.querySelector(".result").innerHTML = result
+    playerDisplay.textContent = `Player Choice: ${playerSelection}`;
+    computerDisplay.textContent = `Computer Choice: ${computerSelection}`;
+    resultDisplay.textContent = result;
 
+
+    resultDisplay.classList.remove("greenText", "redText");
+
+    switch(result) {
+        case "YOU WIN!": 
+            resultDisplay.classList.add("greenText");
+            humanScore++;
+            playerScoreDisplay.textContent = humanScore;
+            break;
+        
+        case "YOU LOSE!": 
+            resultDisplay.classList.add("redText");
+            computerScore++;
+            computerScoreDisplay.textContent = computerScore;
+            break;
+    }
+
+    if(humanScore === 5) {
+        alert("Game Over! YOU WON!!!");
+        gameReset();
+    }else if(computerScore ===5){
+        alert("Game Over! COMPUTER WON..");
+        gameReset();
+    }
 }
-
-//get value of button on click
-buttons.forEach(button => {
-    button.addEventListener('click', (e) =>{
-        playRound(button.value)
-    })
-});
